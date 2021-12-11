@@ -76,9 +76,13 @@ namespace CommuMoney.DAL
 
         
 
-        public override Depenses_DAL Insert(Depenses_DAL item)
+        public override Depenses_DAL Insert(Depenses_DAL depense)
         {
-            
+            dbConnect();
+
+            commande.CommandText="insert into"
+
+            dbClose();
         }
 
 
