@@ -26,14 +26,14 @@ namespace CommuMoney.DAL
 
         }
 
-        public Remboursement_DAL(int id, int id_depenses, int id_gens, float argentGlobal)
+        public Remboursement_DAL(int id, int id_depenses, int id_gens, float argentGlobal, DateTime? created_at)
         {
             ID_REMBOURSEMENT = id;
             ID_ARGENT_DEP = id_depenses;
             ID_GENS_A_REMBOURSER = id_gens;
             ARGENT_GLOBAL = argentGlobal;
         }
-        public Remboursement_DAL(int id, int id_depenses, int id_gens, float argentGlobal, float argentMoy)
+        public Remboursement_DAL(int id, int id_depenses, int id_gens, float argentGlobal, float argentMoy, DateTime? created_at)
         {
             ID_REMBOURSEMENT = id;
             ID_ARGENT_DEP = id_depenses;
@@ -41,7 +41,7 @@ namespace CommuMoney.DAL
             ARGENT_GLOBAL = argentGlobal;
             ARGENT_MOYENNE = argentMoy;
         }
-        public Remboursement_DAL(int id, int id_depenses, int id_gens, float argentGlobal, float argentMoy, float Dette)
+        public Remboursement_DAL(int id, int id_depenses, int id_gens, float argentGlobal, float argentMoy, float Dette, DateTime? created_at)
         {
             ID_REMBOURSEMENT = id;
             ID_ARGENT_DEP = id_depenses;
