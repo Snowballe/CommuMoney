@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CommuMoney.DAL
 {
-    class Depense_DepotDAL : Depot_DAL<Depenses_DAL>
+    public class Depense_DepotDAL : Depot_DAL<Depenses_DAL>
     {
         public override void Delete(Depenses_DAL depense)
         {
@@ -80,15 +80,38 @@ namespace CommuMoney.DAL
         {
             dbConnect();
 
-            commande.CommandText="insert into"
+            commande.CommandText = "insert into Depenses(id_depense, id_gens_qui_depense, argent_depense) values (@ID_DEP, @ID_GENS_DEP, @ARGENT); select scope_identity()";
+            commande.Parameters.Add(new SqlParameter("@ID_DEP", depense.ID_DEPENSE));
+            commande.Parameters.Add(new SqlParameter("@ID_GENS_DEP", depense.ID_GENS_QUI_DEPENSE));
+            commande.Parameters.Add(new SqlParameter("@ARGENT", depense.ARGENT));
+
+            var ID = Convert.ToInt32((decimal)commande.ExecuteScalar());
+
+            depense.ID_DEPENSE = ID;
 
             dbClose();
+
+            return depense;
         }
 
 
-        public override Depenses_DAL Update(Depenses_DAL item)
+        public override Depenses_DAL Update(Depenses_DAL depense)
         {
-            throw new NotImplementedException();
+            dbConnect();
+
+            commande.CommandText = "update Depenses set argent_depense=@ARGENT, id_gens_qui_depense=@ID_GENS, updated_at=getDate() where id_depense=@ID";
+            commande.Parameters.Add(new SqlParameter("@ARGENT", depense.ARGENT));
+            commande.Parameters.Add(new SqlParameter("@ID_GENS", depense.ID_GENS_QUI_DEPENSE));
+            commande.Parameters.Add(new SqlParameter("@ID", depense.ID_DEPENSE));
+            var nbLignes = (int)commande.ExecuteNonQuery();
+
+            if (nbLignes != 1)
+            {
+                throw new Exception($"Impossible de mettre à jour la dépense avec l'ID {depense.ID_DEPENSE}");
+            }
+
+            dbClose();
+            return depense;
         }
     }
 }

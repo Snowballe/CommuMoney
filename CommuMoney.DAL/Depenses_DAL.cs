@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CommuMoney.DAL
 {
-    class Depenses_DAL
+    public class Depenses_DAL
     {
         public int ID_DEPENSE { get; set; }
         public int ID_GENS_QUI_DEPENSE { get; set; }
