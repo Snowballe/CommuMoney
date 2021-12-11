@@ -12,13 +12,13 @@ namespace CommuMoney.DAL
         public override void Delete(Remboursement_DAL remboursement)
         {
             dbConnect();
-            commande.CommandText = "delete from Depenses where id_depense=@ID";
-            commande.Parameters.Add(new SqlParameter("@ID", remboursement.ID_DEPENSE));
+            commande.CommandText = "delete from Remboursement where id_remboursement=@ID";
+            commande.Parameters.Add(new SqlParameter("@ID", remboursement.ID_REMBOURSEMENT));
             var nbLigne = (int)commande.ExecuteNonQuery();
 
             if (nbLigne!=1)
             {
-                throw new Exception($"Impossible de supprimer le point d'ID {remboursement.ID_DEPENSE}");
+                throw new Exception($"Impossible de supprimer le point d'ID {remboursement.ID_REMBOURSEMENT}");
             }
             
             dbClose();
@@ -30,21 +30,21 @@ namespace CommuMoney.DAL
         {
             dbConnect();
 
-            commande.CommandText = "select id_depense, id_gens_qui_depense, argent_depense, created_at from Depenses";
+            commande.CommandText = "select id_remboursement, id_argent_depense, id_gens_a_rembourser, created_at from Remboursement";
             var reader = commande.ExecuteReader();
 
-            var listeDesDepenses = new List<Remboursement_DAL>();
+            var listeDesRemboursements = new List<Remboursement_DAL>();
             while (reader.Read())
             {
                 var dep = new Remboursement_DAL(reader.GetInt32(0),
                                             reader.GetInt32(1),
-                                            reader.GetFloat(2),
+                                            reader.GetInt32(2),
                                             reader.GetDateTime(3));
-                listeDesDepenses.Add(dep);
+                listeDesRemboursements.Add(dep);
             }
 
             dbClose();
-            return listeDesDepenses;
+            return listeDesRemboursements;
 
         }
 
@@ -52,7 +52,7 @@ namespace CommuMoney.DAL
         public override Remboursement_DAL GetByID(int ID)
         {
             dbConnect();
-            commande.CommandText = "select id_depense, id_gens_qui_depense, argent_depense, created_at from Depenses where id_depenses=@ID";
+            commande.CommandText = "select id_remboursement, id_argent_depense, id_gens_a_rembourser, created_at from Remboursement where id_remboursement=@ID";
             commande.Parameters.Add(new SqlParameter("@ID", ID));
             var reader = commande.ExecuteReader();
 
@@ -62,12 +62,12 @@ namespace CommuMoney.DAL
             {
                 dep = new Remboursement_DAL(reader.GetInt32(0),
                                         reader.GetInt32(1),
-                                        reader.GetFloat(2),
+                                        reader.GetInt32(2),
                                         reader.GetDateTime(3));
             }
             else
             {
-                throw new Exception($"Pas de dépense de disponible avec l'ID {ID}");
+                throw new Exception($"Pas de remboursement de disponible avec l'ID {ID}");
             }
 
             dbClose();
@@ -76,42 +76,42 @@ namespace CommuMoney.DAL
 
         
 
-        public override Remboursement_DAL Insert(Remboursement_DAL depense)
+        public override Remboursement_DAL Insert(Remboursement_DAL remboursement)
         {
             dbConnect();
 
-            commande.CommandText = "insert into Depenses(id_depense, id_gens_qui_depense, argent_depense) values (@ID_DEP, @ID_GENS_DEP, @ARGENT); select scope_identity()";
-            commande.Parameters.Add(new SqlParameter("@ID_DEP", depense.ID_DEPENSE));
-            commande.Parameters.Add(new SqlParameter("@ID_GENS_DEP", depense.ID_GENS_QUI_DEPENSE));
-            commande.Parameters.Add(new SqlParameter("@ARGENT", depense.ARGENT));
+            commande.CommandText = "insert into Remboursement(id_remboursement, id_argent_depense,id_gens_a_rembourser ) values (@ID_REM, @ID_ARGENT_DEP, @GENS_REM); select scope_identity()";
+            commande.Parameters.Add(new SqlParameter("@ID_REM", remboursement.ID_REMBOURSEMENT));
+            commande.Parameters.Add(new SqlParameter("@ID_ARGENT_DEP", remboursement.ID_ARGENT_DEP));
+            commande.Parameters.Add(new SqlParameter("@GENS_REM", remboursement.ID_GENS_A_REMBOURSER));
 
             var ID = Convert.ToInt32((decimal)commande.ExecuteScalar());
 
-            depense.ID_DEPENSE = ID;
+            remboursement.ID_REMBOURSEMENT = ID;
 
             dbClose();
 
-            return depense;
+            return remboursement;
         }
 
 
-        public override Remboursement_DAL Update(Remboursement_DAL depense)
+        public override Remboursement_DAL Update(Remboursement_DAL remboursement)
         {
             dbConnect();
 
-            commande.CommandText = "update Depenses set argent_depense=@ARGENT, id_gens_qui_depense=@ID_GENS, updated_at=getDate() where id_depense=@ID";
-            commande.Parameters.Add(new SqlParameter("@ARGENT", depense.ARGENT));
-            commande.Parameters.Add(new SqlParameter("@ID_GENS", depense.ID_GENS_QUI_DEPENSE));
-            commande.Parameters.Add(new SqlParameter("@ID", depense.ID_DEPENSE));
+            commande.CommandText = "update Remboursement set id_argent_depense=@ARGENT, id_gens_a_rembourser=@ID_GENS, updated_at=getDate() where id_remboursement=@ID";
+            commande.Parameters.Add(new SqlParameter("@ARGENT", remboursement.ID_ARGENT_DEP));
+            commande.Parameters.Add(new SqlParameter("@ID_GENS", remboursement.ID_GENS_A_REMBOURSER));
+            commande.Parameters.Add(new SqlParameter("@ID", remboursement.ID_REMBOURSEMENT));
             var nbLignes = (int)commande.ExecuteNonQuery();
 
             if (nbLignes != 1)
             {
-                throw new Exception($"Impossible de mettre à jour la dépense avec l'ID {depense.ID_DEPENSE}");
+                throw new Exception($"Impossible de mettre à jour la dépense avec l'ID {remboursement.ID_REMBOURSEMENT}");
             }
 
             dbClose();
-            return depense;
+            return remboursement;
         }
     }
 }

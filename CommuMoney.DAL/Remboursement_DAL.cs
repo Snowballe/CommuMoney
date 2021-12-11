@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommuMoney.DAL
 {
-    class Remboursement_DAL
+    public class Remboursement_DAL
     {
         public int ID_REMBOURSEMENT { get; set; }
         public int ID_ARGENT_DEP { get; set; }
