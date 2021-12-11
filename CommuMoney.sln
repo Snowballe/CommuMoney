@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommuMoney.DAL", "CommuMoney.DAL\CommuMoney.DAL.csproj", "{981B182D-E9FE-479B-A0E2-2172C8C684AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{981B182D-E9FE-479B-A0E2-2172C8C684AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{981B182D-E9FE-479B-A0E2-2172C8C684AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{981B182D-E9FE-479B-A0E2-2172C8C684AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{981B182D-E9FE-479B-A0E2-2172C8C684AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94E74FD0-2B9D-4712-B737-18112149B4C1}
+	EndGlobalSection
+EndGlobal
